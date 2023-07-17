@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -13,9 +11,10 @@ class Profile(models.Model):
         return self.user.username
 
 
-class Chat(models.Model):
-    content = models.TextField(max_length=600)
+class ChatRoom(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='chat_rooms_as_user')
+    other_user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='chat_rooms_as_other_user')
+    message = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Chat {self.id}"
