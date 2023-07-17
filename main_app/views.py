@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from .models import Profile
 from django.views.generic.edit import DeleteView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 
 
@@ -115,4 +115,8 @@ def change_password(request):
         return render(request, 'change_password.html', args)
 
 
-
+class DeleteUser(SuccessMessageMixin, DeleteView):
+    model = User
+    template_name = 'delete_user_confirm.html'
+    success_message = "User has been deleted"
+    success_url = reverse_lazy('home')

@@ -12,6 +12,7 @@
 <div class="card-action">
     {% if request.user.id == profile.user.id %}
         <a href="{% url 'edit_profile'%}" style="color: rgb(117, 162, 133)">Edit</a>
+        <a href="{% url 'delete_user' user.id%}" style="color: rgb(117, 162, 133)">Delete</a>
     {% endif %}
 </div>
 <br
