@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Chat Room with {{ other_user.username }}</h1>
+<h1>Chat Room</h1>
+<div id="chat-history">
+    {% for chat_room in chat_rooms %}
+    <p>{{ chat_room.user.username }} ({{ chat_room.timestamp }}): {{ chat_room.message }}</p>
+    {% endfor %}
+</div>
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="message" placeholder="Type your message here" required>
+    <button type="submit">Send</button>
+</form>
+
+{% endblock %}

@@ -13,6 +13,7 @@ from .models import Profile
 from django.views.generic.edit import DeleteView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
+from .models import ChatRoom
 
 
 def home(request):
@@ -26,8 +27,8 @@ def about(request):
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    first_name = forms.CharField(max_length=30)
-    last_name = forms.CharField(max_length=30)
+    first_name = forms.CharField(max_length=250)
+    last_name = forms.CharField(max_length=250)
     profile_picture = forms.ImageField(required=True)
 
 class Meta(UserCreationForm.Meta):
@@ -70,7 +71,6 @@ def profile(request):
 
     context = {'user': user, 'profile': profile}
     return render(request, 'profile.html', context)
-
 
 def edit_profile(request):
     if request.method == 'POST':
@@ -120,3 +120,25 @@ class DeleteUser(SuccessMessageMixin, DeleteView):
     template_name = 'delete_user_confirm.html'
     success_message = "User has been deleted"
     success_url = reverse_lazy('home')
+
+@login_required
+def user_list(request):
+    users = User.objects.all()
+    context = {'users': users}
+    return render(request, 'user_list.html', context)
+
+
+@login_required
+def chat_room(request, other_username):
+    user = request.user
+    other_username = User.objects.get(username=other_username)
+    if request.method == 'POST':
+        message = request.POST['message']
+        chat_room = ChatRoom.objects.create(
+            user=user, other_user=other_username, message=message)
+    chat_rooms = ChatRoom.objects.filter(user=user, other_user=other_username) | ChatRoom.objects.filter(
+        user=other_username, other_user=user)
+    context = {'user': user, 'other_user': other_username,
+               'chat_rooms': chat_rooms}
+    return render(request, 'chat_room.html', context)
+
