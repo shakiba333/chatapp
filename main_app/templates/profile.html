@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <h1>Welcome, {{ user.username }}!</h1>
 <p>Email: {{ user.email }}</p>
 <p>Name: {{ user.first_name }}</p>
@@ -9,8 +10,9 @@
 <img src="{{user.profile.profile_picture.url }}" alt="Profile Picture">
 <br>
 <div class="card-action">
-    <a href="{% url 'profile_update' profile.id %}" style="color: rgb(117, 162, 133)">Edit</a>
-    <a href="{% url 'profile_delete' profile.id %}" style="color: rgb(117, 162, 133)">Delete</a>
+    {% if request.user.id == profile.user.id %}
+        <a href="{% url 'edit_profile'%}" style="color: rgb(117, 162, 133)">Edit</a>
+    {% endif %}
 </div>
-<br>
+<br
 {% endblock %}
