@@ -6,6 +6,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.db import models
 from .models import Profile
+from django.views.generic.edit import UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def home(request):
@@ -23,7 +25,7 @@ class SignUpForm(UserCreationForm):
     last_name = forms.CharField(max_length=30)
     profile_picture = forms.ImageField(required=True)
 
-    class Meta(UserCreationForm.Meta):
+class Meta(UserCreationForm.Meta):
         model = User
         fields = ('username', 'email', 'first_name',
                   'last_name', 'password1', 'password2')
@@ -63,3 +65,24 @@ def profile(request):
 
     context = {'user': user, 'profile': profile}
     return render(request, 'profile.html', context)
+
+
+
+def profile_update_view(request, pk):
+    profile = Profile.objects.get(user=request.user)
+    return ProfileUpdate.as_view()(request, pk=pk, template_name='profile_form.html', instance=profile)
+
+class ProfileUpdate(UpdateView):
+    model = Profile
+    form_class = SignUpForm
+    template_name = 'profile_form.html'
+    success_url = '/profile/'
+
+
+class ProfileDelete(DeleteView):
+    model = Profile
+    success_url = 'home'
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return redirect(self.get_success_url())

@@ -7,5 +7,10 @@
 <p>The Image URL: {{ user.profile.profile_picture.url }}</p>
 
 <img src="{{user.profile.profile_picture.url }}" alt="Profile Picture">
-
+<br>
+<div class="card-action">
+    <a href="{% url 'profile_update' profile.id %}" style="color: rgb(117, 162, 133)">Edit</a>
+    <a href="{% url 'profile_delete' profile.id %}" style="color: rgb(117, 162, 133)">Delete</a>
+</div>
+<br>
 {% endblock %}
