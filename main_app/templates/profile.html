@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<h1>Welcome, {{ user.username }}!</h1>
-<p>Email: {{ user.email }}</p>
-<p>Name: {{ user.first_name }}</p>
-<p>Name: {{ user.last_name }}</p>
-<p>The Image URL: {{ user.profile.profile_picture.url }}</p>
+<br>
+<h1 style="color:#4F6367;">Welcome,<span style="color:#FE5F55;"> {{ user.username }}!</span></h1>
+<p style="color:#4F6367;">Email: {{ user.email }}</p>
+<p style="color:#4F6367;">Name: {{ user.first_name }} {{ user.last_name }}</p>
+<p style="color:#4F6367;">The Image URL: {{ user.profile.profile_picture.url }}</p>
 
 <img src="{{user.profile.profile_picture.url }}" alt="Profile Picture">
 <br>
 <div class="card-action">
     {% if request.user.id == profile.user.id %}
-        <a href="{% url 'edit_profile'%}" style="color: rgb(117, 162, 133)">Edit</a>
-        <a href="{% url 'delete_user' user.id%}" style="color: rgb(117, 162, 133)">Delete</a>
+    <button class="btn" style="background-color:#4F6367;" onclick="location.href='{% url 'edit_profile'%}'">
+        Edit
+      </button>
+      <br>
+</div>
+<div>
+      <button class="btn" style="background-color: #FE5F55;" onclick="location.href='{% url 'delete_user' user.id%}'">
+        Delete
+      </button>
     {% endif %}
 </div>
 <br
