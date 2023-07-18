@@ -21,9 +21,14 @@
                 </ul>
                 <ul class="right">
                     {% if user.is_authenticated %}
+
+                    <li><a href="{% url 'chat_history' %}">Chat History</a></li>
+                    
+
                     <li><a href="{% url 'profile' %}" class="nav-link px-2 text-white">Profile</a></li>
                     <li><a href="{% url 'user_list' %}" class="nav-link px-2 text-white">Start Chatting!</a></li>
                     <li><a href="{% url 'logout' %}" type="button" class="btn btn-warning">Logout</a></li>
+
                     {% else %}
                       <a href="{% url 'login' %}" type="button" class="btn btn-outline-light me-2">Login</a>
                       <a href="{% url 'signup' %}" type="button" class="btn btn-warning">Sign-up</a>
