@@ -74,28 +74,32 @@ def profile(request):
 
 def edit_profile(request):
     if request.method == 'POST':
-        form = EditProfileForm(request.POST, instance=request.user)
-
+        form = EditProfileForm(request.POST,request.FILES, instance=request.user)
         if form.is_valid():
+            profile_picture = form.cleaned_data['profile_picture']
+            if profile_picture:
+                request.user.profile.profile_picture = profile_picture
+                request.user.profile.save()
             form.save()
             return redirect('profile')
 
     else:
         form = EditProfileForm(instance=request.user)
-        args = {'form':form}
-        return render(request, 'edit_profile.html', args)
+    args = {'form':form}
+    return render(request, 'edit_profile.html', args)
 
 
 class EditProfileForm(UserChangeForm):
-
-    class Meta:
-        model = User
-        fields = (
-            'username',
-            'email', 
-            'first_name', 
-            'last_name',
-        )
+    profile_picture = forms.ImageField(required=False)
+    
+class Meta:
+    model = User
+    fields = (
+        'username',
+        'email', 
+        'first_name', 
+        'last_name',
+    )
 
 def change_password(request):
     if request.method == 'POST':
