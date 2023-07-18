@@ -91,15 +91,14 @@ def edit_profile(request):
 
 class EditProfileForm(UserChangeForm):
     profile_picture = forms.ImageField(required=False)
-    
-class Meta:
-    model = User
-    fields = (
-        'username',
-        'email', 
-        'first_name', 
-        'last_name',
-    )
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'email', 
+            'first_name', 
+            'last_name',
+        )
 
 def change_password(request):
     if request.method == 'POST':
