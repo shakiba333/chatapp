@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Chat History</h1>
+{% if chat_participants %}
+{% for participant in chat_participants %}
+<a href="{% url 'chat_room' participant.username %}">
+    <p>You chatted with {{ participant.username }}</p>
+</a>
+{% endfor %}
+{% else %}
+<p>You have no chat history</p>
+{% endif %}
+{% endblock %}
