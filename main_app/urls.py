@@ -13,4 +13,5 @@ urlpatterns = [
     path('delete_user/<int:pk>/', views.DeleteUser.as_view(), name='delete_user'),
     path('users/', views.user_list, name='user_list'),
     path('chat_room/<str:other_username>/', views.chat_room, name='chat_room'),
+    path('chat_history/', views.chat_history, name='chat_history'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

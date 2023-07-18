@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.forms import (
-    UserCreationForm, 
-    UserChangeForm, 
+    UserCreationForm,
+    UserChangeForm,
     PasswordChangeForm
-    )
+)
 from django.contrib.auth.decorators import login_required
 from django import forms
 from django.contrib.auth.models import User
@@ -31,10 +31,11 @@ class SignUpForm(UserCreationForm):
     last_name = forms.CharField(max_length=250)
     profile_picture = forms.ImageField(required=True)
 
+
 class Meta(UserCreationForm.Meta):
-        model = User
-        fields = ('username', 'email', 'first_name',
-                  'last_name', 'password1', 'password2')
+    model = User
+    fields = ('username', 'email', 'first_name',
+              'last_name', 'password1', 'password2')
 
 
 def signup(request):
@@ -72,9 +73,11 @@ def profile(request):
     context = {'user': user, 'profile': profile}
     return render(request, 'profile.html', context)
 
+
 def edit_profile(request):
     if request.method == 'POST':
-        form = EditProfileForm(request.POST, instance=request.user)
+        form = EditProfileForm(
+            request.POST, instance=request.user)
 
         if form.is_valid():
             form.save()
@@ -82,7 +85,7 @@ def edit_profile(request):
 
     else:
         form = EditProfileForm(instance=request.user)
-        args = {'form':form}
+        args = {'form': form}
         return render(request, 'edit_profile.html', args)
 
 
@@ -92,10 +95,12 @@ class EditProfileForm(UserChangeForm):
         model = User
         fields = (
             'username',
-            'email', 
-            'first_name', 
+            'email',
+            'first_name',
             'last_name',
+
         )
+
 
 def change_password(request):
     if request.method == 'POST':
@@ -107,7 +112,7 @@ def change_password(request):
             return redirect('profile')
         else:
             return redirect('change-password')
-    
+
     else:
         form = PasswordChangeForm(user=request.user)
 
@@ -120,6 +125,7 @@ class DeleteUser(SuccessMessageMixin, DeleteView):
     template_name = 'delete_user_confirm.html'
     success_message = "User has been deleted"
     success_url = reverse_lazy('home')
+
 
 @login_required
 def user_list(request):
@@ -142,3 +148,19 @@ def chat_room(request, other_username):
                'chat_rooms': chat_rooms}
     return render(request, 'chat_room.html', context)
 
+
+@login_required
+def chat_history(request):
+    user = request.user
+    chat_rooms = ChatRoom.objects.filter(
+        user=user
+    ).order_by('-timestamp')
+
+    chat_participants = set()
+    for chat_room in chat_rooms:
+        chat_participants.add(chat_room.other_user)
+
+    context = {
+        'chat_participants': chat_participants,
+    }
+    return render(request, 'chat_history.html', context)

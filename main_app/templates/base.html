@@ -20,8 +20,8 @@
                 </ul>
                 <ul class="right">
                     {% if user.is_authenticated %}
-                    <li><a href="{% url 'about' %}">about</a></li>
-                    <li><a href="{% url 'user_list' %}">View User List</a></li>
+                    <li><a href="{% url 'chat_history' %}">Chat History</a></li>
+                    <li><a href="{% url 'user_list' %}">Chat</a></li>
                     <li><a href="{% url 'profile' %}">profile</a></li>
                     <li><a href="{% url 'logout' %}">Logout</a></li>
                     {% else %}

@@ -2,18 +2,19 @@
 
 {% block content %}
 
-    <h1>Update <span class="teal-text">{{user.username}}</span></h1>
- 
-    <form action="" method="POST">
-      
-      <br>
-      {% csrf_token %}
-      <div class="card-action">
-        <a href="{% url 'change_password'%}" style="color: rgb(117, 162, 133)">Change Password Here</a>
-      </div>
-      {{ form.as_p }}
-      <p>'this form' link does not change password, go to <a href="{% url 'change_password'%}" style="color: rgb(117, 162, 133)"> 'Change Password Here' </a> instead.</p>
-      <br>
-      <input type="submit" value="Update!" class="btn" style="background-color: rgb(117, 162, 133)">
-  </form>
+<h1>Update <span class="teal-text">{{user.username}}</span></h1>
+
+<form action="" method="POST">
+
+  <br>
+  {% csrf_token %}
+  <div class="card-action">
+    <a href="{% url 'change_password'%}" style="color: rgb(117, 162, 133)">Change Password Here</a>
+  </div>
+  {{ form.as_p }}
+  <p>'this form' link does not change password, go to <a href="{% url 'change_password'%}"
+      style="color: rgb(117, 162, 133)"> 'Change Password Here' </a> instead.</p>
+  <br>
+  <input type="submit" value="Update!" class="btn" style="background-color: rgb(117, 162, 133)">
+</form>
 {% endblock %}
