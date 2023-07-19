@@ -1,17 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
 <br>
-<h1 style="color:#4F6367;">Chat Room with {{ other_user.username }}</h1>
-<h1 style="color:#4F6367;">Chat Room</h1>
-<div id="chat-history">
-    {% for chat_room in chat_rooms %}
-    <p>{{ chat_room.user.username }} ({{ chat_room.timestamp }}): {{ chat_room.message }}</p>
-    {% endfor %}
-</div>
-<form method="post">
-    {% csrf_token %}
-    <input type="text" name="message" placeholder="Type your message here" required>
-    <button type="submit">Send</button>
-</form>
+<div class="chat-container">
+    <h1>Chat Room with {{ other_user.username }}</h1>
+    <div id="chat-history">
+        {% for chat_room in chat_rooms %}
+        <div class="msg-row-container">
+            <div class="msg-row-container">
+                <img class="msg-picture" src="{{ chat_room.user.profile.profile_picture.url }}" alt="">
+                <p>{{ chat_room.user.username }}</p>
+            </div>
+            <div class="column-container">
+                <span>{{ chat_room.timestamp }}</span>
+                <p class="msg-content">{{ chat_room.message }}</p>
+            </div>
+        </div>
 
+        {% endfor %}
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Type your message here" required>
+        <button type="submit">Send</button>
+    </form>
+</div>
 {% endblock %}

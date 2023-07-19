@@ -4,8 +4,12 @@
 <h1>Chat History</h1>
 {% if chat_participants %}
 {% for participant in chat_participants %}
+
 <a href="{% url 'chat_room' participant.username %}">
-    <p>You chatted with {{ participant.username }}</p>
+    <div class="msg-row-container">
+        <img class="msg-picture" src="{{ participant.profile.profile_picture.url}}" alt="">
+        <p>{{ participant.username }}</p>
+    </div>
 </a>
 {% endfor %}
 {% else %}

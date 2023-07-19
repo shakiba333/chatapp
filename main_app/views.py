@@ -77,7 +77,8 @@ def profile(request):
 def edit_profile(request):
     if request.method == 'POST':
 
-        form = EditProfileForm(request.POST,request.FILES, instance=request.user)
+        form = EditProfileForm(
+            request.POST, request.FILES, instance=request.user)
 
         if form.is_valid():
             profile_picture = form.cleaned_data['profile_picture']
@@ -90,13 +91,13 @@ def edit_profile(request):
     else:
         form = EditProfileForm(instance=request.user)
 
-    args = {'form':form}
+    args = {'form': form}
     return render(request, 'edit_profile.html', args)
-
 
 
 class EditProfileForm(UserChangeForm):
     profile_picture = forms.ImageField(required=False)
+
     class Meta:
         model = User
         fields = (
@@ -158,13 +159,15 @@ def chat_room(request, other_username):
 @login_required
 def chat_history(request):
     user = request.user
-    chat_rooms = ChatRoom.objects.filter(
-        user=user
-    ).order_by('-timestamp')
+    user_chat_rooms = ChatRoom.objects.filter(user=user).order_by('-timestamp')
+    other_user_chat_rooms = ChatRoom.objects.filter(
+        other_user=user).order_by('-timestamp')
 
     chat_participants = set()
-    for chat_room in chat_rooms:
+    for chat_room in user_chat_rooms:
         chat_participants.add(chat_room.other_user)
+    for chat_room in other_user_chat_rooms:
+        chat_participants.add(chat_room.user)
 
     context = {
         'chat_participants': chat_participants,

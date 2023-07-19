@@ -1,25 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
 <br>
-<h1 style="color:#4F6367;">Welcome,<span style="color:#FE5F55;"> {{ user.username }}!</span></h1>
-<p style="color:#4F6367;">Email: {{ user.email }}</p>
-<p style="color:#4F6367;">Name: {{ user.first_name }} {{ user.last_name }}</p>
-<p style="color:#4F6367;">The Image URL: {{ user.profile.profile_picture.url }}</p>
+<div class="column-container">
+  <img class="image-profile" src="{{user.profile.profile_picture.url }}" alt="Profile Picture">
+  <br>
+  <h1>Welcome,<span class="display-name"> {{ user.username }}!</span></h1>
+  <p>Email: {{ user.email }}</p>
+  <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
 
-<img src="{{user.profile.profile_picture.url }}" alt="Profile Picture">
-<br>
-<div class="card-action">
-    {% if request.user.id == profile.user.id %}
-    <button class="btn" style="background-color:#4F6367;" onclick="location.href='{% url 'edit_profile'%}'">
+  <div class="row-container">
+    <div class="card-action">
+      {% if request.user.id == profile.user.id %}
+      <button class="btn-Delete" onclick="location.href='{% url 'edit_profile'%}'">
         Edit
       </button>
-      <br>
-</div>
-<div>
-      <button class="btn" style="background-color: #FE5F55;" onclick="location.href='{% url 'delete_user' user.id%}'">
+    </div>
+    <div>
+      <button class="btn-Edit" onclick="location.href='{% url 'delete_user' user.id%}'">
         Delete
       </button>
-    {% endif %}
+      {% endif %}
+    </div>
+  </div>
 </div>
-<br
 {% endblock %}
