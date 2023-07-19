@@ -5,6 +5,7 @@
 <br>
 <div class="chats-container">
     <h1>Chat Rooms</h1>
+    <br>
 
 
     {% for user in users %}
@@ -14,7 +15,7 @@
     <div class="msg-row-container">
         <img class="msg-picture" src="{{ user.profile.profile_picture.url }}" alt="">
         <a href="{% url 'chat_room' user.username %}">
-            <p>{{ user.username }}</p>
+            <p type="button" class="btn btn-warning">{{ user.username }}</p>
         </a>
     </div>
 

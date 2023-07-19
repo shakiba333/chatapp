@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 <br>
+<h1>Welcome,<span class="display-name"> {{ user.username }}!</span></h1>
 <div class="column-container">
   <img class="image-profile" src="{{user.profile.profile_picture.url }}" alt="Profile Picture">
   <br>
-  <h1>Welcome,<span class="display-name"> {{ user.username }}!</span></h1>
+  
   <p>Email: {{ user.email }}</p>
   <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
 
