@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, update_session_auth_hash
+from django.contrib.auth import login, update_session_auth_hash, authenticate
 from django.contrib.auth.forms import (
     UserCreationForm,
     UserChangeForm,
@@ -14,7 +14,8 @@ from django.views.generic.edit import DeleteView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from .models import ChatRoom
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.template import RequestContext, context
 
 def home(request):
     return render(request, 'home.html')
@@ -22,7 +23,7 @@ def home(request):
 
 @login_required
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'about.html', context, context_instance=RequestContext)
 
 
 class SignUpForm(UserCreationForm):
@@ -71,7 +72,7 @@ def profile(request):
         profile = Profile.objects.create(user=user)
 
     context = {'user': user, 'profile': profile}
-    return render(request, 'profile.html', context)
+    return render(request, 'profile.html', context, context_instance=UserContext)
 
 
 def edit_profile(request):
@@ -91,11 +92,11 @@ def edit_profile(request):
         form = EditProfileForm(instance=request.user)
 
     args = {'form':form}
-    return render(request, 'edit_profile.html', args)
+    return render(request, 'edit_profile.html', args, context, context_instance=UserContext)
 
 
 
-class EditProfileForm(UserChangeForm):
+class EditProfileForm(LoginRequiredMixin, UserChangeForm):
     profile_picture = forms.ImageField(required=False)
     class Meta:
         model = User
@@ -123,7 +124,7 @@ def change_password(request):
         form = PasswordChangeForm(user=request.user)
 
         args = {'form': form}
-        return render(request, 'change_password.html', args)
+        return render(request, 'change_password.html', args, context, context_instance=UserContext)
 
 
 class DeleteUser(SuccessMessageMixin, DeleteView):
@@ -137,7 +138,7 @@ class DeleteUser(SuccessMessageMixin, DeleteView):
 def user_list(request):
     users = User.objects.all()
     context = {'users': users}
-    return render(request, 'user_list.html', context)
+    return render(request, 'user_list.html',context, context_instance=UserContext)
 
 
 @login_required
@@ -152,7 +153,7 @@ def chat_room(request, other_username):
         user=other_username, other_user=user)
     context = {'user': user, 'other_user': other_username,
                'chat_rooms': chat_rooms}
-    return render(request, 'chat_room.html', context)
+    return render(request, 'chat_room.html',context, context_instance=UserContext)
 
 
 @login_required
@@ -169,4 +170,4 @@ def chat_history(request):
     context = {
         'chat_participants': chat_participants,
     }
-    return render(request, 'chat_history.html', context)
+    return render(request, 'chat_history.html', context, context_instance=UserContext)

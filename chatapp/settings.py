@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://twilight-sound-1626.fly.dev/','http://localhost:8000/']
+CSRF_TRUSTED_ORIGINS = ['https://twilight-sound-1626.fly.dev','http://localhost:8000/']
 
 
 # Application definition
