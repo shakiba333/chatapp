@@ -10,7 +10,7 @@
 ## Technologies Used
 The app is built using the following technologies:
 
-- Front-end: HTML, CSS (with aesthetic enhancements), JavaScript
+- Front-end: HTML, CSS (with aesthetic enhancements)
 - Backend: Python, Django
 - Database: PostgreSQL
 
