@@ -1,11 +1,12 @@
-# fly.toml app configuration file generated for billowing-breeze-9493 on 2023-07-18T13:49:01-04:00
+# fly.toml app configuration file generated for twilight-sound-1626 on 2023-07-18T15:32:12-04:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "billowing-breeze-9493"
+app = "twilight-sound-1626"
 primary_region = "bos"
 console_command = "/code/manage.py shell"
+
 
 [env]
   PORT = "8000"
