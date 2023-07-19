@@ -3,17 +3,26 @@
 {% block content %}
 
 <br>
-<h1 style="color:#4F6367;">Chat Rooms</h1>
+<div class="chats-container">
+    <h1>Chat Rooms</h1>
+    <br>
 
-<ul>
+
     {% for user in users %}
     {% if not user.is_superuser %}
     {% if user != request.user %}
-    <a href="{% url 'chat_room' user.username %}">
-        <li>Chat with {{ user.username }}</li>
-    </a>
+
+    <div class="msg-row-container">
+        <img class="msg-picture" src="{{ user.profile.profile_picture.url }}" alt="">
+        <a href="{% url 'chat_room' user.username %}">
+            <p type="button" class="btn btn-warning">{{ user.username }}</p>
+        </a>
+    </div>
+
     {% endif %}
     {% endif %}
     {% endfor %}
-</ul>
+
+</div>
+
 {% endblock %}

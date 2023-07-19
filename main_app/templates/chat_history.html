@@ -1,14 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<br>
 <h1>Chat History</h1>
+<br>
 {% if chat_participants %}
 {% for participant in chat_participants %}
+
 <a href="{% url 'chat_room' participant.username %}">
-    <p>You chatted with {{ participant.username }}</p>
+    <div class="msg-row-container">
+        <img class="msg-picture" src="{{ participant.profile.profile_picture.url}}" alt="">
+        <p type="button" class="btn btn-warning">{{ participant.username }}</p>
+    </div>
 </a>
 {% endfor %}
 {% else %}
+<br>
 <p>You have no chat history</p>
 {% endif %}
 {% endblock %}
