@@ -5,6 +5,10 @@ body {
     color: #4F6367;
 }
 
+li {
+    text-decoration: none;
+}
+
 p {
     margin: 4px;
 }
@@ -84,4 +88,3 @@ footer.page-footer {
     padding: 10px;
     border-radius: 6px;
 }
-
