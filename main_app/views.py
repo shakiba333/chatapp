@@ -17,13 +17,14 @@ from .models import ChatRoom
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template import RequestContext, context
 
+
 def home(request):
     return render(request, 'home.html')
 
 
 @login_required
 def about(request):
-    return render(request, 'about.html', context, context_instance=RequestContext)
+    return render(request, 'about.html', context)
 
 
 class SignUpForm(UserCreationForm):
@@ -72,7 +73,7 @@ def profile(request):
         profile = Profile.objects.create(user=user)
 
     context = {'user': user, 'profile': profile}
-    return render(request, 'profile.html', context, context_instance=UserContext)
+    return render(request, 'profile.html', context)
 
 
 def edit_profile(request):
@@ -126,7 +127,7 @@ def change_password(request):
         form = PasswordChangeForm(user=request.user)
 
         args = {'form': form}
-        return render(request, 'change_password.html', args, context, context_instance=UserContext)
+        return render(request, 'change_password.html', args, context)
 
 
 class DeleteUser(SuccessMessageMixin, DeleteView):
@@ -140,7 +141,7 @@ class DeleteUser(SuccessMessageMixin, DeleteView):
 def user_list(request):
     users = User.objects.all()
     context = {'users': users}
-    return render(request, 'user_list.html',context, context_instance=UserContext)
+    return render(request, 'user_list.html', context)
 
 
 @login_required
@@ -155,7 +156,7 @@ def chat_room(request, other_username):
         user=other_username, other_user=user)
     context = {'user': user, 'other_user': other_username,
                'chat_rooms': chat_rooms}
-    return render(request, 'chat_room.html',context, context_instance=UserContext)
+    return render(request, 'chat_room.html', context)
 
 
 @login_required
@@ -174,4 +175,4 @@ def chat_history(request):
     context = {
         'chat_participants': chat_participants,
     }
-    return render(request, 'chat_history.html', context, context_instance=UserContext)
+    return render(request, 'chat_history.html', context)

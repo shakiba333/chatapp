@@ -1,23 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
 <br>
-<h1>Welcome,<span class="display-name"> {{ user.username }}!</span></h1>
+<h1>Welcome,<span class="amber-text"> {{ user.username }}!</span></h1>
 <div class="column-container">
   <img class="image-profile" src="{{user.profile.profile_picture.url }}" alt="Profile Picture">
   <br>
-  
+
   <p>Email: {{ user.email }}</p>
   <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
 
   <div class="row-container">
-    <div class="card-action">
+    <div class="nav-wrapper ">
       {% if request.user.id == profile.user.id %}
-      <button class="btn-Delete" onclick="location.href='{% url 'edit_profile'%}'">
-        Edit
+      <button class="btn btn-warning" onclick="location.href='{% url 'edit_profile'%}'">
+        &nbsp;&nbsp;Edit&nbsp;&nbsp;
       </button>
     </div>
+    &nbsp;&nbsp;
     <div>
-      <button class="btn-Edit" onclick="location.href='{% url 'delete_user' user.id%}'">
+      <button class="btn btn-warning" onclick="location.href='{% url 'delete_user' user.id%}'">
         Delete
       </button>
       {% endif %}
