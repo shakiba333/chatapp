@@ -4,7 +4,7 @@
 
 
 ## Link to App:
-- You can access the hosted app at: (https://twilight-sound-1626.fly.dev/)
+- You can access the hosted app at: (https://shy-bush-5706.fly.dev/)
 
 
 ## Technologies Used
